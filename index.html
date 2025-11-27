@@ -1,74 +1,527 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mis Proyectos</title>
-  <link rel="stylesheet" href="index.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Portafolio - Nikol Ballesteros</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #1a1a2e;
+      --secondary: #16213e;
+      --accent: #0f3460;
+      --highlight: #e94560;
+      --text-light: #eee;
+      --text-dark: #333;
+      --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-alt: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --card-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      --card-shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #f8f9fa 0%, #e9ecef 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header profesional */
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      color: white;
+      text-align: center;
+      padding: 120px 20px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+      opacity: 0.3;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to top, #f8f9fa, transparent);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: -2px;
+      animation: fadeInUp 0.8s ease;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
+      font-weight: 300;
+      opacity: 0.95;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero-tags {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+
+    .tag {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      padding: 8px 20px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .tag:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Sección de proyectos */
+    .projects-section {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 80px 40px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .section-header p {
+      font-size: 1.1rem;
+      color: #666;
+      font-weight: 300;
+    }
+
+    /* Grid de proyectos */
+    .proyectos-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 40px;
+    }
+
+    /* Tarjeta de proyecto mejorada */
+    .proyecto-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .proyecto-card:hover {
+      transform: translateY(-15px) scale(1.02);
+      box-shadow: var(--card-shadow-hover);
+    }
+
+    .proyecto-card:nth-child(odd) .proyecto-card a {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .proyecto-card:nth-child(even) .proyecto-card a {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+    }
+
+    .proyecto-card:nth-child(3n) .proyecto-card a {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+    }
+
+    .proyecto-card-image {
+      position: relative;
+      overflow: hidden;
+      height: 260px;
+      background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+    }
+
+    .proyecto-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+      filter: brightness(0.95);
+    }
+
+    .proyecto-card:hover img {
+      transform: scale(1.15) rotate(2deg);
+      filter: brightness(1.05);
+    }
+
+    .proyecto-card-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .proyecto-card:hover .proyecto-card-overlay {
+      opacity: 1;
+    }
+
+    .proyecto-card-content {
+      padding: 30px;
+    }
+
+    .proyecto-card h3 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .proyecto-card-description {
+      color: #666;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      min-height: 45px;
+    }
+
+    .proyecto-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .proyecto-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: var(--gradient);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .proyecto-card a:hover {
+      transform: translateX(5px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.7);
+    }
+
+    .proyecto-card i {
+      font-size: 0.9rem;
+    }
+
+    /* Footer profesional */
+    .footer {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: var(--text-light);
+      text-align: center;
+      padding: 50px 20px;
+      margin-top: 100px;
+      position: relative;
+    }
+
+    .footer::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: 0;
+      right: 0;
+      height: 50px;
+      background: linear-gradient(to bottom, transparent, #1a1a2e);
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer p {
+      font-size: 1rem;
+      opacity: 0.8;
+    }
+
+    .footer-social {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      color: var(--text-light);
+      font-size: 1.5rem;
+      opacity: 0.7;
+      transition: all 0.3s ease;
+    }
+
+    .footer-social a:hover {
+      opacity: 1;
+      transform: translateY(-5px) scale(1.2);
+      color: #667eea;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .proyectos-container {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 0 20px;
+      }
+
+      .section-header h2 {
+        font-size: 2rem;
+      }
+
+      .projects-section {
+        padding: 60px 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        padding: 60px 20px 50px;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-tags {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <header class="hero">
     <div class="hero-content">
-      <h1>Mis Proyectos</h1>
-      <p>Explora mis trabajos y prototipos web desarrollados durante mi aprendizaje.</p>
+      <h1>Nikol Ballesteros</h1>
+      <p>Desarrolladora Web Full Stack especializada en crear experiencias digitales modernas y funcionales</p>
+      
     </div>
   </header>
 
-  <main class="proyectos-container">
-    <div class="proyecto-card">
-      <img src="mi perfil.jpg" alt="Mi Perfil">
-      <h3>Mi Perfil</h3>
-      <a href="https://nikolballesteros30.github.io/my_page/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
+  <section class="projects-section">
+    <div class="section-header">
+      <h2>Proyectos Destacados</h2>
+      <p>Una selección de mis trabajos más recientes</p>
     </div>
 
-    <div class="proyecto-card">
-      <img src="conciertos.jpg" alt="Conciertos">
-      <h3>Conciertos</h3>
-      <a href="https://nikolballesteros30.github.io/conciertos/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
-    </div>
+    <main class="proyectos-container">
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="mi perfil.jpg" alt="Mi Perfil">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>Mi Perfil</h3>
+          <p class="proyecto-card-description">Sitio web personal con diseño minimalista y responsive</p>
+          <div class="proyecto-card-footer">
+            <a href="https://nikolballesteros30.github.io/my_page/" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="proyecto-card">
-      <img src="quiensoy.jpg" alt="¿Quién Soy?">
-      <h3>¿Quién Soy?</h3>
-      <a href="https://nikolballesteros30.github.io/quien-soy-page/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
-    </div>
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="conciertos.jpg" alt="Conciertos">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>Conciertos</h3>
+          <p class="proyecto-card-description">Plataforma de eventos con interfaz moderna e intuitiva</p>
+          <div class="proyecto-card-footer">
+            <a href="https://nikolballesteros30.github.io/conciertos/" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="proyecto-card">
-      <img src="video.png" alt="Video">
-      <h3>Vídeo Git Hub</h3>
-      <a href="https://youtu.be/QwNNidGyHqg?si=0JZ3shiolMon-pT8" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
-    </div>
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="quiensoy.jpg" alt="¿Quién Soy?">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>¿Quién Soy?</h3>
+          <p class="proyecto-card-description">Página de presentación personal con storytelling visual</p>
+          <div class="proyecto-card-footer">
+            <a href="https://nikolballesteros30.github.io/quien-soy-page/" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="proyecto-card">
-      <img src="hoja de vida.jpg" alt="Hoja de Vida">
-      <h3>Hoja De Vida</h3>
-      <a href=" https://nikolballesteros30.github.io/curriculum_hoja_de_vida/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
-    </div>
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="video.png" alt="Video">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>Vídeo Git Hub</h3>
+          <p class="proyecto-card-description">Video educativo sobre control de versiones</p>
+          <div class="proyecto-card-footer">
+            <a href="https://youtu.be/QwNNidGyHqg?si=0JZ3shiolMon-pT8" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="proyecto-card">
-      <img src="cafe.jpg" alt="Tienda Café">
-      <h3>Tienda Café</h3>
-      <a href="https://nikolballesteros30.github.io/tiendacafe/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
-    </div>
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="hoja de vida.jpg" alt="Hoja de Vida">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>Hoja De Vida</h3>
+          <p class="proyecto-card-description">CV digital interactivo con diseño profesional</p>
+          <div class="proyecto-card-footer">
+            <a href=" https://nikolballesteros30.github.io/curriculum_hoja_de_vida/" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <div class="proyecto-card">
-      <img src="pokemon.jpg" alt="Pokecard">
-      <h3>Pokecard</h3>
-      <a href="https://nikolballesteros30.github.io/pokecart/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
-    </div>
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="cafe.jpg" alt="Tienda Virtual restaurante">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>Tienda Virtual restaurante</h3>
+          <p class="proyecto-card-description">E-commerce completo con carrito de compras funcional</p>
+          <div class="proyecto-card-footer">
+            <a href="https://alex-eir7.onrender.com/?authuser=0" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
 
-     <div class="proyecto-card">
-      <img src="vet.avif" alt="pagina veterinaria">
-      <h3>Pagina Veterinaria</h3>
-      <a href="https://nikolballesteros30.github.io/veterinaria/" target="_blank"><i class="fas fa-external-link-alt"></i> Ver Proyecto</a>
-    </div>
-  </main>
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="pokemon.jpg" alt="Pokecard">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>Pokecard</h3>
+          <p class="proyecto-card-description">Aplicación interactiva con API de Pokemon</p>
+          <div class="proyecto-card-footer">
+            <a href="https://nikolballesteros30.github.io/pokemon/" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="proyecto-card">
+        <div class="proyecto-card-image">
+          <img src="vet.avif" alt="pagina veterinaria">
+          <div class="proyecto-card-overlay"></div>
+        </div>
+        <div class="proyecto-card-content">
+          <h3>Pagina Veterinaria</h3>
+          <p class="proyecto-card-description">Sitio web corporativo con sistema de citas</p>
+          <div class="proyecto-card-footer">
+            <a href="https://nikolballesteros30.github.io/veterinaria/" target="_blank">
+              <i class="fas fa-external-link-alt"></i> Ver Proyecto
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </section>
 
   <footer class="footer">
-    <p>&copy; 2025 Nikol Ballesteros | Desarrollador Web</p>
+    <div class="footer-content">
+      <p>&copy; 2025 Nikol Ballesteros | Desarrolladora Web </p>
+      <div class="footer-social">
+        <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
   </footer>
 
 </body>
